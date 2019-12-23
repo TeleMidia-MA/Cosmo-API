@@ -1,8 +1,13 @@
 import query from "./query"
 import mutation from "./mutation"
-import {userType} from "./types"
-import {userInput} from "./inputs"
+import {userType, courseType} from "./types"
+import {userInput, courseInput} from "./inputs"
+import rolesEnum from "./enum/rolesEnum";
 
-const typeDefs = [query, userType, mutation, userInput]
+const typeDefs = [
+    rolesEnum,
+    query, userType, courseType,
+    mutation, userInput, courseInput
+]
 
 export default typeDefs
