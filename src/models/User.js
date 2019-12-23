@@ -2,19 +2,19 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import bcrypt from "bcrypt" 
 
-const Schema = mongoose.Schema
-
 class User {
-    constructor(id, email, password){
+    constructor(id, email, password, role){
         this.id = id
         this.email = email
-        this.password = password
+        this.password = password,
+        this.role = role
     }
 }
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
     email: {type: String, unique: true, required: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    role: {type: String, default: "user", enum: ["user", "administrator", "teacher"]}
 })
 
 UserSchema.pre("save", async function(next){
