@@ -1,9 +1,7 @@
 import {gql} from "apollo-server-express"
 
 const mutation = gql`
-    type Mutation {
-        register(user: UserInput) : User
-        
+    extend type Mutation {
         createCourse(course: CourseInput) : Course
     }
 `
