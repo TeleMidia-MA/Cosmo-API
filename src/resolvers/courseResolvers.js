@@ -3,7 +3,18 @@ import {UserModel} from "../models"
 import jwt from "jsonwebtoken"
 
 const courseResolvers = {
-    Query: {},
+    Query: {
+        course: async (_, {id}, context) => {
+            try {
+                const courseInstance = await CourseModel.findOne({id})
+                if (!courseInstance)
+                    throw `Course ${id} not found`
+                return courseInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        }
+    },
     Mutation: {
         createCourse: async (_, {course}, context) => {
             try {

@@ -2,7 +2,8 @@ import {gql} from "apollo-server-express"
 
 const courseInput = gql`
     input CourseInput {
-        title: String
+        id: String!
+        title: String!
         description: String
     }
 `

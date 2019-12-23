@@ -7,3 +7,4 @@ const query = gql`
 `
 
 export default query
+export {default as course} from "./course"
