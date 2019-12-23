@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 const userResolvers = {
     Query: {
-        login: async (_, {email, password}) => {
+        login: async (_, {email, password}, context) => {            
             try {
                 const userInstance = await UserModel.findOne({email})
                 if (!userInstance)
@@ -14,6 +14,10 @@ const userResolvers = {
                     throw new Error("Email or password incorrect")
                 const token = jwt.sign({id: userInstance._id}, process.env.JWT_SECRET, {
                     expiresIn: 1440
+                })
+                context.response.cookie("token", token, {
+                    expires: new Date(Date.now() + 900000),
+                    httpOnly: false
                 })
                 return token
             } catch (error) {
