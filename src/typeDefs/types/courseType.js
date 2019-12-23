@@ -2,7 +2,7 @@ import {gql} from "apollo-server-express"
 
 const courseType = gql`
     type Course {
-        id: ID!
+        id: String
         title: String
         description: String
     }

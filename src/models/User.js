@@ -2,7 +2,7 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { fchown } from "fs";
+import { fchown } from "fs"
 
 class User {
     constructor(id, email, password, role){
@@ -53,7 +53,7 @@ UserSchema.methods.comparePassword = async function(candidatePassword, callback)
 UserSchema.statics.getRole = async function(token, callback){
     const {id} = jwt.verify(token, process.env.JWT_SECRET)
     if (!id)
-        return null;
+        return null
     const userInstance = await this.findOne({_id: id})
     if (userInstance)
         return userInstance.role
