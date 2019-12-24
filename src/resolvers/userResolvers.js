@@ -26,8 +26,16 @@ const userResolvers = {
         }
     },
     Mutation: {
-        register: async (_, {user}) => {
+        register: async (_, {user}, context) => {
             try {
+                if (!context.request.cookies.token)
+                    user.role = "user"
+                else {
+                    const role = await UserModel.getRole(context.request.cookies.token)
+                    if (role !== "administrator")
+                        user.role = "user"
+                }
+                    
                 const userModel = new UserModel(user)
                 const userInstance = await userModel.save()
                 return userInstance

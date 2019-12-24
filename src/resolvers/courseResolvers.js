@@ -20,10 +20,12 @@ const courseResolvers = {
             try {
                 if (!context.request.cookies.token)
                     throw "You dont have permission for this."
-                const role = await UserModel.getRole(context.request.cookies.token)
-                if (role !== "administrator")
-                    throw "You dont have permission for this."
-                
+                else {
+                    const role = await UserModel.getRole(context.request.cookies.token)
+                    if (role !== "administrator")
+                        throw "You dont have permission for this."
+                }
+
                 const courseModel = new CourseModel(course)
                 const courseInstance = await courseModel.save()
                 return courseInstance
