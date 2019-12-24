@@ -5,6 +5,7 @@ const courseType = gql`
         id: String
         title: String
         description: String
+        participants: [User]
     }
 `
 
