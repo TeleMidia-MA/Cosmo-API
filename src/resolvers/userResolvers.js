@@ -79,7 +79,7 @@ const userResolvers = {
                 if (!course)
                     throw "Invalid course."
             
-                if (!userLogged.courses.includes(course) && !course.participants.includes(userLogged)){
+                if (!userLogged.courses.includes(course._id.toString()) && !course.participants.includes(userLogged._id.toString())){
                    userLogged.courses.push(course)
                    course.participants.push(userLogged)
                 }
