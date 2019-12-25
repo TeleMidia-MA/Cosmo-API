@@ -71,10 +71,14 @@ const userResolvers = {
                     if (userLogged._id.toString() !== user)
                         throw "You dont have permission for this."
                 course = await CourseModel.getById(course)
+                if (!course)
+                    throw "Invalid course."
+            
                 if (!userLogged.courses.includes(course) && !course.participants.includes(userLogged)){
-                    userLogged.courses.push(course)
-                    course.participants.push(userLogged)
+                   userLogged.courses.push(course)
+                   course.participants.push(userLogged)
                 }
+
                 userLogged.save()
                 course.save()
                 return course

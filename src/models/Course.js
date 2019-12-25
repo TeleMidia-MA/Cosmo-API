@@ -16,14 +16,15 @@ const CourseSchema = new mongoose.Schema({
     participants: [{ type: mongoose.Schema.ObjectId, ref: "User" }]
 })
 
-CourseSchema.path("id").validate(async (value) => {
-    const count = await mongoose.model("Course").countDocuments({id: value})
-    return !count
-}, "ID must be unique")
+
+// CourseSchema.path("id").validate(async (value) => {
+//     const count = await mongoose.model("Course").countDocuments({id: value})
+//     return !count
+// }, "ID must be unique")
 
 CourseSchema.statics.getById = async function(id, callback){
-    const userInstance = await this.findOne({id: id})
-    return userInstance
+    const courseInstance = await this.findOne({id: id})
+    return courseInstance
 }
 
 export const CourseModel = mongoose.model("Course", CourseSchema)

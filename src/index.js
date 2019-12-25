@@ -10,12 +10,9 @@ mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':'
     useNewUrlParser: true,
     useCreateIndex: true
 })
+
 const app = express()
 app.use(cookieParser())
-
-app.get("/", (req, res) => {
-    console.log(req.cookies.token)
-})
 
 const apolloServer = new ApolloServer({
     typeDefs,
