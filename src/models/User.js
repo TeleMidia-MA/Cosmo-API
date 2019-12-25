@@ -52,7 +52,7 @@ UserSchema.methods.comparePassword = async function(candidatePassword, callback)
     }
 }
 
-UserSchema.statics.getById = async function(id, callback){
+UserSchema.statics.getByObjectId = async function(id, callback){
     const userInstance = await this.findOne({_id: id})
     return userInstance
 }

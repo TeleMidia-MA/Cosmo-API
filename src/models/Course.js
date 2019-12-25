@@ -22,6 +22,11 @@ const CourseSchema = new mongoose.Schema({
 //     return !count
 // }, "ID must be unique")
 
+CourseSchema.statics.getByObjectId = async function(id, callback){
+    const courseInstance = await this.findOne({_id: id})
+    return courseInstance
+}
+
 CourseSchema.statics.getById = async function(id, callback){
     const courseInstance = await this.findOne({id: id})
     return courseInstance

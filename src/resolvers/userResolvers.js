@@ -14,7 +14,13 @@ const userResolvers = {
                 if (userLogged.role !== "administrator")
                     if (userLogged.email !== email)
                         throw "You dont have permission for this."
-                    
+                
+                for await (const id of userLogged.courses){
+                    const course = await CourseModel.getByObjectId(id.toString())
+                    const index = userLogged.courses.indexOf(id)
+                    userLogged.courses[index] = course
+                }
+
                 return userLogged
             } catch (error) {
                 throw new Error(error)
@@ -59,7 +65,6 @@ const userResolvers = {
                 throw new Error(error)
             }
         },
-        // enrollment(user: ID!, course: String!) : Course
         enrollment: async (_, {user, course}, context) => {
             try {
                 if (!context.request.cookies.token)
