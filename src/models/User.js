@@ -5,18 +5,20 @@ import jwt from "jsonwebtoken"
 import { fchown } from "fs"
 
 class User {
-    constructor(id, email, password, role){
+    constructor(id, email, password, role, courses){
         this.id = id
         this.email = email
         this.password = password,
-        this.role = role
+        this.role = role,
+        this.courses = courses
     }
 }
 
 const UserSchema = new mongoose.Schema({
     email: {type: String, unique: true, required: true},
     password: {type: String, required: true},
-    role: {type: String, default: "user", enum: ["user", "administrator", "teacher"]}
+    role: {type: String, default: "user", enum: ["user", "administrator", "teacher"]},
+    courses: [{type: mongoose.Schema.ObjectId, ref: "Course"}]
 })
 
 UserSchema.pre("save", async function(next){
@@ -48,6 +50,19 @@ UserSchema.methods.comparePassword = async function(candidatePassword, callback)
     } catch (error){
         throw new Error(error)
     }
+}
+
+UserSchema.statics.getById = async function(id, callback){
+    const userInstance = await this.findOne({_id: id})
+    return userInstance
+}
+
+UserSchema.statics.getByToken = async function(token, callback){
+    const {id} = jwt.verify(token, process.env.JWT_SECRET)
+    if (!id)
+        return null
+    const userInstance = await this.findOne({_id: id})
+    return userInstance
 }
 
 UserSchema.statics.getRole = async function(token, callback){

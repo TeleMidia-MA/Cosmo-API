@@ -7,5 +7,5 @@ const query = gql`
 `
 
 export default query
-export {default as auth} from "./auth"
+export {default as user} from "./user"
 export {default as course} from "./course"
