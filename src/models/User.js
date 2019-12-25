@@ -52,6 +52,11 @@ UserSchema.methods.comparePassword = async function(candidatePassword, callback)
     }
 }
 
+UserSchema.statics.getById = async function(id, callback){
+    const userInstance = await this.findOne({_id: id})
+    return userInstance
+}
+
 UserSchema.statics.getByToken = async function(token, callback){
     const {id} = jwt.verify(token, process.env.JWT_SECRET)
     if (!id)
