@@ -30,7 +30,7 @@ const apolloServer = new ApolloServer({
         }
     }
 })
-apolloServer.applyMiddleware({app, path: "/graphql"})
+apolloServer.applyMiddleware({app, path: "/"})
 
 app.listen(process.env.PORT || 5000, () => {
     console.log(`🚀 Server running at localhost:${process.env.PORT || 5000}`)
