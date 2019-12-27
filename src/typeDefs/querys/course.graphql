@@ -1,5 +1,6 @@
 # import Course from "../types/course.graphql"
 
 type Query {
+    courses : [Course]
     course(id: String!) : Course
 }
