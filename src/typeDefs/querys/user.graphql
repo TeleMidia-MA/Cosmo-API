@@ -1,0 +1,6 @@
+# import User from "../types/user.graphql"
+
+type Query {
+    user(email: String!) : User
+    login(email: String!, password: String!) : String
+}

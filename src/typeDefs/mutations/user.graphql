@@ -1,0 +1,14 @@
+# import Roles from "../enum/roles.graphql"
+# import User from "../types/user.graphql"
+# import Course from "../types/course.graphql"
+
+input UserInput {
+    email: String!
+    password: String!
+    role: Roles
+}
+
+type Mutation {
+    register(user: UserInput) : User
+    enrollment(user: ID!, course: String!) : Course
+}

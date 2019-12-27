@@ -1,0 +1,10 @@
+# import Roles from "../enum/roles.graphql"
+# import Course from "./course.graphql"
+
+type User {
+    id: ID!
+    email: String
+    password: String
+    role: Roles
+    courses: [Course]
+}
