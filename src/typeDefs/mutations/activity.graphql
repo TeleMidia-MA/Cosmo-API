@@ -1,0 +1,9 @@
+# import Activity from "../types/activity.graphql"
+
+input ActivityInput {
+    title: String!
+}
+
+type Mutation {
+    createActivity(activity: ActivityInput) : Activity
+}

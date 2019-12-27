@@ -1,6 +1,4 @@
-import {CourseModel} from "../models"
-import {UserModel} from "../models"
-import jwt from "jsonwebtoken"
+import {UserModel, CourseModel} from "../models"
 
 const courseResolvers = {
     Query: {

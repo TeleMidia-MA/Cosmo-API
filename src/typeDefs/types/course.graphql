@@ -1,8 +1,10 @@
 #import User from "./user.graphql"
+#import Activity from "./activity.graphql"
 
 type Course {
     id: String
     title: String
     description: String
     participants: [User]
+    activities: [Activity]
 }
