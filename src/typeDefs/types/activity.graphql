@@ -1,0 +1,4 @@
+type Activity {
+    id: ID!
+    title: String
+}

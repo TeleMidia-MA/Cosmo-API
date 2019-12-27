@@ -1,2 +1,3 @@
 export {default as User, UserModel} from "./User"
 export {default as Course, CourseModel} from "./Course"
+export {default as Activity, ActivityModel} from "./Activity"
