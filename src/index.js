@@ -1,9 +1,9 @@
 import "dotenv/config"
 import express from "express"
-import {ApolloServer} from "apollo-server-express"
-import typeDefs from "./typeDefs"
-import resolvers from "./resolvers"
 import mongoose from "mongoose"
+import {ApolloServer} from "apollo-server-express"
+import { importSchema } from "graphql-import"
+import resolvers from "./resolvers"
 import cookieParser from "cookie-parser"
 
 mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':' + process.env.DATABASE_PORT + '/' + process.env.DATABASE_NAME, {
@@ -14,8 +14,10 @@ mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':'
 const app = express()
 app.use(cookieParser())
 
+const typeDefs = importSchema(`${__dirname}/typeDefs/schema.graphql`)
+
 const apolloServer = new ApolloServer({
-    typeDefs,
+    typeDefs: [typeDefs],
     resolvers,
     context: ({req, res}) => {
         return {
