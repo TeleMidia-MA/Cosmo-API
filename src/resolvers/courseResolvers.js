@@ -2,6 +2,14 @@ import {UserModel, CourseModel} from "../models"
 
 const courseResolvers = {
     Query: {
+        courses: async() => {
+            try {
+                const courses = await CourseModel.find({})
+                return courses
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
         course: async (_, {id}, context) => {
             try {
                 const courseInstance = await CourseModel.findOne({id})
