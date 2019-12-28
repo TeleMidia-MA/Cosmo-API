@@ -14,14 +14,6 @@ const activityResolvers = {
     Mutation : {
         createActivity: async (_, {activity}, context) => {
             try {
-                if (!context.request.cookies.token)
-                    throw "You dont have permission for this."
-                else {
-                    const role = await UserModel.getRole(context.request.cookies.token)
-                    if (role !== "administrator")
-                        throw "You dont have permission for this."
-                }
-
                 const activityModel = new ActivityModel(activity)
                 const activityInstance = await activityModel.save()
                 return activityInstance

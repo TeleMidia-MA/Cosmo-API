@@ -1,6 +1,6 @@
 # import Activity from "../types/activity.graphql"
 
 type Query {
-    activities : [Activity]
-    activity(id: ID!) : Activity
+    activities: [Activity] @hasRole(requires: user)
+    activity(id: ID!) : Activity @hasRole(requires: user)
 }

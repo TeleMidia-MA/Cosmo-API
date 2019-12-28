@@ -67,14 +67,6 @@ const userResolvers = {
         },
         enrollment: async (_, {user, course}, context) => {
             try {
-                if (!context.request.cookies.token)
-                    throw "You must be logged for this"
-                const userLogged = await UserModel.getByToken(context.request.cookies.token)
-                if (!userLogged)
-                    throw "You must be logged for this"
-                if (userLogged.role !== "administrator")
-                    if (userLogged._id.toString() !== user)
-                        throw "You dont have permission for this."
                 course = await CourseModel.getById(course)
                 if (!course)
                     throw "Invalid course."
