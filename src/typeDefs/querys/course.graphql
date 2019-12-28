@@ -1,6 +1,6 @@
 # import Course from "../types/course.graphql"
 
 type Query {
-    courses : [Course]
-    course(id: String!) : Course
+    courses: [Course] @hasRole(requires: user)
+    course(id: String!) : Course @hasRole(requires: user)
 }

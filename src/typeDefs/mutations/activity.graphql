@@ -5,5 +5,5 @@ input ActivityInput {
 }
 
 type Mutation {
-    createActivity(activity: ActivityInput) : Activity
+    createActivity(activity: ActivityInput) : Activity @hasRole(requires: administrator)
 }

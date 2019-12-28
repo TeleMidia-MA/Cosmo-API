@@ -7,5 +7,5 @@ input CourseInput {
 }
 
 type Mutation {
-    createCourse(course: CourseInput) : Course
+    createCourse(course: CourseInput) : Course @hasRole(requires: administrator)
 }

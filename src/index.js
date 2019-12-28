@@ -1,10 +1,11 @@
 import "dotenv/config"
 import express from "express"
 import mongoose from "mongoose"
-import {ApolloServer} from "apollo-server-express"
+import { ApolloServer, makeExecutableSchema } from "apollo-server-express"
 import { importSchema } from "graphql-import"
 import resolvers from "./resolvers"
 import cookieParser from "cookie-parser"
+import { HasRoleDirective } from "./directives"
 
 mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':' + process.env.DATABASE_PORT + '/' + process.env.DATABASE_NAME, {
     useNewUrlParser: true,
@@ -15,10 +16,16 @@ const app = express()
 app.use(cookieParser())
 
 const typeDefs = importSchema(`${__dirname}/typeDefs/schema.graphql`)
+const schemas = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    directiveResolvers: {
+        hasRole: HasRoleDirective
+    }
+})
 
 const apolloServer = new ApolloServer({
-    typeDefs: [typeDefs],
-    resolvers,
+    schema: schemas,
     context: ({req, res}) => {
         return {
             request: req,
