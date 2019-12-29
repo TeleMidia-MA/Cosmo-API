@@ -65,6 +65,15 @@ const userResolvers = {
                 throw new Error(error)
             }
         },
+        createUser: async(_, {user}) => {
+            try {
+                const userModel = new UserModel(user)
+                const userInstance = await userModel.save()
+                return userInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
         enrollment: async (_, {user, course}, context) => {
             try {
                 if (!context.request.cookies.token)
