@@ -12,7 +12,7 @@ const activityResolvers = {
         }
     },
     Mutation : {
-        createActivity: async (_, {activity}, context) => {
+        createActivity: async (_, {activity}) => {
             try {
                 const activityModel = new ActivityModel(activity)
                 const activityInstance = await activityModel.save()

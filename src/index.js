@@ -10,7 +10,8 @@ import depthLimit from "graphql-depth-limit"
 
 mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':' + process.env.DATABASE_PORT + '/' + process.env.DATABASE_NAME, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 })
 
 const app = express()
