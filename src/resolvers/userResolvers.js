@@ -48,7 +48,7 @@ const userResolvers = {
         }
     },
     Mutation: {
-        createUser: async(_, {user}) => {
+        createUser: async (_, {user}) => {
             try {
                 const userModel = new UserModel(user)
                 const userInstance = await userModel.save()
@@ -57,11 +57,26 @@ const userResolvers = {
                 throw new Error(error)
             }
         },
-        deleteUser: async(_, {id}) => {
+        deleteUser: async (_, {id}) => {
             // TODO: De-enroll this student from all courses
             try {
                 const user = await UserModel.findByIdAndDelete(id)
                 return user !== null
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        editUser: async (_, {user}) => {
+            try {
+                const userInstance = UserModel.findById(user.id)
+                if (!userInstance)
+                    throw "Invalid user."
+                if (user.email)
+                    userInstance.email = user.email
+                if (user.role)
+                    userInstance.role = user.role
+                user.save()
+                return user
             } catch (error) {
                 throw new Error(error)
             }
