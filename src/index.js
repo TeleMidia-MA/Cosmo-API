@@ -6,6 +6,7 @@ import { importSchema } from "graphql-import"
 import resolvers from "./resolvers"
 import cookieParser from "cookie-parser"
 import { HasRoleDirective } from "./directives"
+import depthLimit from "graphql-depth-limit"
 
 mongoose.connect(process.env.DATABASE_PROTOCOL + process.env.DATABASE_HOST + ':' + process.env.DATABASE_PORT + '/' + process.env.DATABASE_NAME, {
     useNewUrlParser: true,
@@ -37,7 +38,8 @@ const apolloServer = new ApolloServer({
         settings: {
             "request.credentials": "include"
         }
-    }
+    },
+    validationRules: [ depthLimit(10) ]
 })
 apolloServer.applyMiddleware({app, path: "/"})
 
