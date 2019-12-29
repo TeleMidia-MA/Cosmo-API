@@ -1,4 +1,7 @@
+# import Grade from "./grade.graphql"
+
 type Activity {
     id: ID!
-    title: String
+    title: String!
+    grade: Grade!
 }

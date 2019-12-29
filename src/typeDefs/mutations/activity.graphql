@@ -1,7 +1,9 @@
 # import Activity from "../types/activity.graphql"
+# import Grade from "../types/grade.graphql"
 
 input ActivityInput {
     title: String!
+    grade: Grade!
 }
 
 type Mutation {
