@@ -2,24 +2,31 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { fchown } from "fs"
+import autopopulate from "mongoose-autopopulate"
 
 class User {
-    constructor(id, email, password, role, courses){
+    constructor(id, email, password, role){
         this.id = id
         this.email = email
         this.password = password,
-        this.role = role,
-        this.courses = courses
+        this.role = role
     }
 }
 
 const UserSchema = new mongoose.Schema({
     email: {type: String, unique: true, required: true},
     password: {type: String, required: true},
-    role: {type: String, default: "user", enum: ["user", "administrator", "teacher"]},
-    courses: [{type: mongoose.Schema.ObjectId, ref: "Course"}]
+    role: {type: String, default: "user", enum: ["user", "administrator", "teacher"]}
 })
+
+UserSchema.virtual("courses", {
+    ref: "Course",
+    localField: "_id",
+    foreignField: "participants",
+    autopopulate: true
+})
+
+UserSchema.plugin(autopopulate)
 
 UserSchema.pre("save", async function(next){
     const user = this

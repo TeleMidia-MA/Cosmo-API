@@ -67,16 +67,24 @@ const userResolvers = {
         },
         enrollment: async (_, {user, course}, context) => {
             try {
+                if (!context.request.cookies.token)
+                    throw "You must be logged for this."
+                const userLogged = await UserModel.getByToken(context.request.cookies.token)
+                if (!userLogged)
+                    throw "You must be logged for this."
+                if (userLogged.role !== "administrator")
+                    if (userLogged.email !== email)
+                        throw "You dont have permission for this."
+                
                 course = await CourseModel.getById(course)
                 if (!course)
                     throw "Invalid course."
-            
-                if (!userLogged.courses.includes(course._id.toString()) && !course.participants.includes(userLogged._id.toString())){
-                   userLogged.courses.push(course)
-                   course.participants.push(userLogged)
-                }
 
-                userLogged.save()
+                if (!course.participants.some(user => user._id.toString() === userLogged._id.toString()))
+                   course.participants.push(userLogged)
+                else
+                    throw "Already enrolled."
+
                 course.save()
                 return course
             } catch (error) {
