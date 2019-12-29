@@ -10,7 +10,7 @@ const courseResolvers = {
                 throw new Error(error)
             }
         },
-        course: async (_, {id}, context) => {
+        course: async (_, {id}) => {
             try {
                 const courseInstance = await CourseModel.findOne({id})
                 if (!courseInstance)
@@ -22,11 +22,21 @@ const courseResolvers = {
         }
     },
     Mutation: {
-        createCourse: async (_, {course}, context) => {
+        createCourse: async (_, {course}) => {
             try {
                 const courseModel = new CourseModel(course)
                 const courseInstance = await courseModel.save()
                 return courseInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        deleteCourse: async (_, {id}) => {
+            try {
+                const course = await CourseModel.findOneAndDelete({id})
+                if (!course)
+                    return false
+                return true
             } catch (error) {
                 throw new Error(error)
             }
