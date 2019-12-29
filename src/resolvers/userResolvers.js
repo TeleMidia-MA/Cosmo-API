@@ -48,6 +48,24 @@ const userResolvers = {
         }
     },
     Mutation: {
+        createUser: async(_, {user}) => {
+            try {
+                const userModel = new UserModel(user)
+                const userInstance = await userModel.save()
+                return userInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        deleteUser: async(_, {id}) => {
+            // TODO: De-enroll this student from all courses
+            try {
+                const user = await UserModel.findByIdAndDelete(id)
+                return user !== null
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
         register: async (_, {user}, context) => {
             try {
                 if (!context.request.cookies.token)
@@ -58,15 +76,6 @@ const userResolvers = {
                         user.role = "user"
                 }
                     
-                const userModel = new UserModel(user)
-                const userInstance = await userModel.save()
-                return userInstance
-            } catch (error) {
-                throw new Error(error)
-            }
-        },
-        createUser: async(_, {user}) => {
-            try {
                 const userModel = new UserModel(user)
                 const userInstance = await userModel.save()
                 return userInstance
