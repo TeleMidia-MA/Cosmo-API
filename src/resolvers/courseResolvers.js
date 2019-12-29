@@ -40,6 +40,21 @@ const courseResolvers = {
             } catch (error) {
                 throw new Error(error)
             }
+        },
+        editCourse: async (_, {course}) => {
+            try {
+                const courseInstance = await CourseModel.findOne({id: course.id})
+                if (!courseInstance)
+                    throw "This course does not exist."
+                if (course.title)
+                    courseInstance.title = course.title
+                if (course.description)
+                    courseInstance.description = course.description
+                courseInstance.save()
+                return courseInstance
+            } catch (error) {
+                throw new Error(error)
+            }
         }
     }
 }
