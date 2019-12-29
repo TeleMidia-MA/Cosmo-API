@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import autopopulate from "mongoose-autopopulate"
 
 class Course {
     constructor(id, title, description, participants){
@@ -13,14 +14,10 @@ const CourseSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true, index: true, dropDups: true },
     title: { type: String, required: true },
     description: { type: String, required: false },
-    participants: [{ type: mongoose.Schema.ObjectId, ref: "User" }]
+    participants: [{ type: mongoose.Schema.ObjectId, ref: "User", autopopulate: true }]
 })
 
-
-// CourseSchema.path("id").validate(async (value) => {
-//     const count = await mongoose.model("Course").countDocuments({id: value})
-//     return !count
-// }, "ID must be unique")
+CourseSchema.plugin(autopopulate)
 
 CourseSchema.statics.getByObjectId = async function(id, callback){
     const courseInstance = await this.findOne({_id: id})

@@ -15,14 +15,6 @@ const courseResolvers = {
                 const courseInstance = await CourseModel.findOne({id})
                 if (!courseInstance)
                     throw `Course ${id} not found`
-                    
-                for await (const value of courseInstance.participants){
-                    const user = await UserModel.getByObjectId(value.toString())
-                    user.password = ""
-                    const index = courseInstance.participants.indexOf(value)
-                    courseInstance.participants[index] = user
-                }
-
                 return courseInstance
             } catch (error) {
                 throw new Error(error)
