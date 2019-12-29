@@ -9,4 +9,5 @@ input CourseInput {
 type Mutation {
     createCourse(course: CourseInput) : Course @hasRole(requires: administrator)
     deleteCourse(id: String!) : Boolean @hasRole(requires: administrator)
+    editCourse(course: CourseInput) : Course @hasRole(requires: teacher)
 }
