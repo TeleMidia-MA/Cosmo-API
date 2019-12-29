@@ -34,9 +34,7 @@ const courseResolvers = {
         deleteCourse: async (_, {id}) => {
             try {
                 const course = await CourseModel.findOneAndDelete({id})
-                if (!course)
-                    return false
-                return true
+                return course !== null
             } catch (error) {
                 throw new Error(error)
             }

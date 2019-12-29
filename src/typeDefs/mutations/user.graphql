@@ -9,8 +9,9 @@ input UserInput {
 }
 
 type Mutation {
-    createUser(user: UserInput) : User @hasRole(requires: administrator)
+    createUser(user: UserInput!) : User @hasRole(requires: administrator)
+    deleteUser(id: ID!) : Boolean @hasRole(requires: administrator)
 
-    register(user: UserInput) : User
+    register(user: UserInput!) : User
     enrollment(user: ID!, course: String!) : Course
 }
