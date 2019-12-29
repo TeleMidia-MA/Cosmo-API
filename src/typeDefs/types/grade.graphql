@@ -1,0 +1,8 @@
+# import User from "./user.graphql"
+# import Activity from "./activity.graphql"
+
+type Grade {
+    id: ID!
+    user: User!
+    activity: Activity!
+}
