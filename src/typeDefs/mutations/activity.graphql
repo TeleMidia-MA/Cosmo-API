@@ -3,9 +3,9 @@
 
 input ActivityInput {
     title: String!
-    grade: Grade!
 }
 
 type Mutation {
     createActivity(activity: ActivityInput!) : Activity @hasRole(requires: teacher)
+    deleteActivity(id: ID!) : Boolean @hasRole(requires: teacher)
 }
