@@ -1,0 +1,12 @@
+# import Activity from "../types/activity.graphql"
+# import Course from "../types/course.graphql"
+# import CourseModule from "../types/coursemodule.graphql"
+
+input CourseModuleInput {
+    activity: ID!
+    course: ID!
+}
+
+type Mutation {
+    createCourseModule(coursemodule: CourseModuleInput) : CourseModule @hasRole(requires: teacher)
+}

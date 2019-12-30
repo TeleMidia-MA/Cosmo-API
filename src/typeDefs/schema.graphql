@@ -5,6 +5,7 @@
 # import Mutation from "./mutations/user.graphql"
 # import Mutation from "./mutations/course.graphql"
 # import Mutation from "./mutations/activity.graphql"
+# import Mutation from "./mutations/coursemodule.graphql"
 
 directive @hasRole(
     requires: Roles = administrator

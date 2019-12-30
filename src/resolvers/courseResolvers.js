@@ -1,4 +1,4 @@
-import {UserModel, CourseModel} from "../models"
+import {CourseModel} from "../models"
 
 const courseResolvers = {
     Query: {
