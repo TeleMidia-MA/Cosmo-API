@@ -8,4 +8,5 @@ input ActivityInput {
 type Mutation {
     createActivity(activity: ActivityInput!) : Activity @hasRole(requires: teacher)
     deleteActivity(id: ID!) : Boolean @hasRole(requires: teacher)
+    editActivity(id: ActivityInput!) : Activity @hasRole(requires: teacher)
 }

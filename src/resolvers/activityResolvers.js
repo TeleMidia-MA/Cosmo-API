@@ -28,6 +28,18 @@ const activityResolvers = {
             } catch (error) {
                 throw new Error(error)
             }
+        },
+        editActivity: async(_, {activity}) => {
+            try {
+                const activityModel = ActivityModel.findById(activity.id)
+                if (!activityModel)
+                    throw "This activity does not exist."
+                activityModel.title = activity.title
+                activityModel.save()
+                return activityModel
+            } catch (error) {
+                throw new Error(error)
+            }
         }
     }
 }
