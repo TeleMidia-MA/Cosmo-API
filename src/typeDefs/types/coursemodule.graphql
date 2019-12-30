@@ -1,8 +1,8 @@
-# import User from "./user.graphql"
 # import Activity from "./activity.graphql"
+# import Course from "./course.graphql"
 
-type Grade {
+type CourseModule {
     id: ID
-    user: User
     activity: Activity
+    course: Course
 }
