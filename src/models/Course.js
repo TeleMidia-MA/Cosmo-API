@@ -17,6 +17,13 @@ const CourseSchema = new mongoose.Schema({
     participants: [{ type: mongoose.Schema.ObjectId, ref: "User", autopopulate: true }]
 })
 
+CourseSchema.virtual("activities", {
+    ref: "CourseModule",
+    localField: "_id",
+    foreignField: "course",
+    autopopulate: true
+})
+
 CourseSchema.plugin(autopopulate)
 
 CourseSchema.statics.getByObjectId = async function(id, callback){
