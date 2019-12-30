@@ -1,0 +1,5 @@
+# import CourseModule from "../types/coursemodule.graphql"
+
+type Query {
+    courseModules: [CourseModule] @hasRole(requires: user)
+}
