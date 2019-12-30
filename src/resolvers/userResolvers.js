@@ -4,7 +4,15 @@ import jwt from "jsonwebtoken"
 
 const userResolvers = {
     Query: {
-        user: async(_, {email}, context) => {
+        users: async () => {
+            try {
+                const users = await UserModel.find()
+                return users
+            } catch (error) {
+                return new Error(error)
+            }
+        },
+        user: async (_, {email}, context) => {
             try {
                 if (!context.request.cookies.token)
                     throw "You must be logged for this."

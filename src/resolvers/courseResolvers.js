@@ -2,7 +2,7 @@ import {CourseModel} from "../models"
 
 const courseResolvers = {
     Query: {
-        courses: async() => {
+        courses: async () => {
             try {
                 const courses = await CourseModel.find({})
                 return courses
