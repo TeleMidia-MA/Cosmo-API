@@ -1,4 +1,4 @@
-import {UserModel, ActivityModel} from "../models"
+import {ActivityModel} from "../models"
 
 const activityResolvers = {
     Query : {
@@ -17,6 +17,14 @@ const activityResolvers = {
                 const activityModel = new ActivityModel(activity)
                 const activityInstance = await activityModel.save()
                 return activityInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        deleteActivity: async (_, {id}) => {
+            try {
+                const activity = ActivityModel.findByIdAndDelete(id)
+                return activity !== null
             } catch (error) {
                 throw new Error(error)
             }
