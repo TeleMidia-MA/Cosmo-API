@@ -39,9 +39,9 @@ const courseResolvers = {
                 throw new Error(error)
             }
         },
-        editCourse: async (_, {course}) => {
+        editCourse: async (_, {id, course}) => {
             try {
-                const courseInstance = await CourseModel.findOne({_id: course._id})
+                const courseInstance = await CourseModel.findOne({_id: id})
                 if (!courseInstance)
                     throw "This course does not exist."
                 if (course.title)
