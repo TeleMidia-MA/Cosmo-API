@@ -13,6 +13,5 @@ type Mutation {
     deleteUser(id: ID!) : Boolean @hasRole(requires: administrator)
     editUser(user: UserInput!) : User @hasRole(requires: administrator)
 
-    register(user: UserInput!) : User
-    enrollment(user: ID!, course: String!) : Course
+    register(user: UserInput!) : User @hasRole(requires: none)
 }

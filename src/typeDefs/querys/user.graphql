@@ -1,7 +1,7 @@
 # import User from "../types/user.graphql"
 
 type Query {
-    users: [User] @hasRole(requires: teacher)
-    user(email: String!) : User
-    login(email: String!, password: String!) : String
+    user(id: ID!) : User @hasRole(requires: user)
+    users: [User] @hasRole(requires: user)
+    login(email: String!, password: String!) : String @hasRole(requires: none)
 }
