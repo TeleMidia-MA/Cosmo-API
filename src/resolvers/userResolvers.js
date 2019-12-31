@@ -1,5 +1,5 @@
 import "dotenv/config"
-import {UserModel, CourseModel} from "../models"
+import {UserModel} from "../models"
 import jwt from "jsonwebtoken"
 
 const userResolvers = {

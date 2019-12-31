@@ -9,4 +9,6 @@ type Mutation {
     createCourse(course: CourseInput!) : Course @hasRole(requires: administrator)
     deleteCourse(id: ID!) : Boolean @hasRole(requires: administrator)
     editCourse(id: ID!, course: CourseInput!) : Course @hasRole(requires: teacher)
+    
+    courseEnrollment(course: ID!, user: ID!) : Boolean @hasRole(requires: user)
 }
