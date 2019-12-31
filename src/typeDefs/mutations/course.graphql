@@ -1,13 +1,12 @@
 # import Course from "../types/course.graphql"
 
 input CourseInput {
-    id: String!
     title: String
     description: String
 }
 
 type Mutation {
-    createCourse(course: CourseInput) : Course @hasRole(requires: administrator)
-    deleteCourse(id: String!) : Boolean @hasRole(requires: administrator)
-    editCourse(course: CourseInput) : Course @hasRole(requires: teacher)
+    createCourse(course: CourseInput!) : Course @hasRole(requires: administrator)
+    deleteCourse(id: ID!) : Boolean @hasRole(requires: administrator)
+    editCourse(id: ID!, course: CourseInput!) : Course @hasRole(requires: teacher)
 }

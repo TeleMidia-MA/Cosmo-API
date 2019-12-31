@@ -2,7 +2,7 @@
 #import Activity from "./activity.graphql"
 
 type Course {
-    id: String
+    id: ID
     title: String
     description: String
     participants: [User]
