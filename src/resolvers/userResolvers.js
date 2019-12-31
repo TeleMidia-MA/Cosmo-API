@@ -4,15 +4,7 @@ import jwt from "jsonwebtoken"
 
 const userResolvers = {
     Query: {
-        users: async () => {
-            try {
-                const users = await UserModel.find()
-                return users
-            } catch (error) {
-                return new Error(error)
-            }
-        },
-        user: async (_, {email}, context) => {
+        user: async (_, {id}, context) => {
             try {
                 if (!context.request.cookies.token)
                     throw "You must be logged for this."
@@ -20,18 +12,20 @@ const userResolvers = {
                 if (!userLogged)
                     throw "You must be logged for this."
                 if (userLogged.role !== "administrator")
-                    if (userLogged.email !== email)
+                    if (userLogged._id !== id)
                         throw "You dont have permission for this."
-                
-                for await (const id of userLogged.courses){
-                    const course = await CourseModel.getByObjectId(id.toString())
-                    const index = userLogged.courses.indexOf(id)
-                    userLogged.courses[index] = course
-                }
 
                 return userLogged
             } catch (error) {
                 throw new Error(error)
+            }
+        },
+        users: async () => {
+            try {
+                const users = await UserModel.find()
+                return users
+            } catch (error) {
+                return new Error(error)
             }
         },
         login: async (_, {email, password}, context) => {            
@@ -102,32 +96,6 @@ const userResolvers = {
                 const userModel = new UserModel(user)
                 const userInstance = await userModel.save()
                 return userInstance
-            } catch (error) {
-                throw new Error(error)
-            }
-        },
-        enrollment: async (_, {user, course}, context) => {
-            try {
-                if (!context.request.cookies.token)
-                    throw "You must be logged for this."
-                const userLogged = await UserModel.getByToken(context.request.cookies.token)
-                if (!userLogged)
-                    throw "You must be logged for this."
-                if (userLogged.role !== "administrator")
-                    if (userLogged.email !== email)
-                        throw "You dont have permission for this."
-                
-                course = await CourseModel.getById(course)
-                if (!course)
-                    throw "Invalid course."
-
-                if (!course.participants.some(user => user._id.toString() === userLogged._id.toString()))
-                   course.participants.push(userLogged)
-                else
-                    throw "Already enrolled."
-
-                course.save()
-                return course
             } catch (error) {
                 throw new Error(error)
             }

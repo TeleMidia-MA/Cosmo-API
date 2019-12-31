@@ -9,7 +9,7 @@ const roles = {
 
 export default async (next, src, args, context) => {
     try {
-        if (args.requires === "none"){
+        if (args.requires !== "none"){
             if (!context.request.cookies.token)
                 throw "You must be logged for this."
             
