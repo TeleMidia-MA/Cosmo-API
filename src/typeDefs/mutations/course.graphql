@@ -1,7 +1,6 @@
 # import Course from "../types/course.graphql"
 
 input CourseInput {
-    id: String!
     title: String
     description: String
 }

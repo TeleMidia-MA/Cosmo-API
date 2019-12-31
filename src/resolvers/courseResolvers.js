@@ -2,20 +2,20 @@ import {CourseModel} from "../models"
 
 const courseResolvers = {
     Query: {
-        courses: async () => {
+        course: async (_, {id}) => {
             try {
-                const courses = await CourseModel.find({})
-                return courses
+                const courseInstance = await CourseModel.findOne({_id: id})
+                if (!courseInstance)
+                    throw `Course ${id} not found`
+                return courseInstance
             } catch (error) {
                 throw new Error(error)
             }
         },
-        course: async (_, {id}) => {
+        courses: async _ => {
             try {
-                const courseInstance = await CourseModel.findOne({id})
-                if (!courseInstance)
-                    throw `Course ${id} not found`
-                return courseInstance
+                const courses = await CourseModel.find({})
+                return courses
             } catch (error) {
                 throw new Error(error)
             }
@@ -33,7 +33,7 @@ const courseResolvers = {
         },
         deleteCourse: async (_, {id}) => {
             try {
-                const course = await CourseModel.findOneAndDelete({id})
+                const course = await CourseModel.findOneAndDelete({_id: id})
                 return course !== null
             } catch (error) {
                 throw new Error(error)
@@ -41,7 +41,7 @@ const courseResolvers = {
         },
         editCourse: async (_, {course}) => {
             try {
-                const courseInstance = await CourseModel.findOne({id: course.id})
+                const courseInstance = await CourseModel.findOne({_id: course._id})
                 if (!courseInstance)
                     throw "This course does not exist."
                 if (course.title)
