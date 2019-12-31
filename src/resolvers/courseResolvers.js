@@ -1,4 +1,4 @@
-import {CourseModel} from "../models"
+import {CourseModel, UserModel} from "../models"
 
 const courseResolvers = {
     Query: {
@@ -50,6 +50,30 @@ const courseResolvers = {
                     courseInstance.description = course.description
                 courseInstance.save()
                 return courseInstance
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        // courseEnrollment(course: ID!, user: ID!) : Boolean @hasRole(requires: user)
+        courseEnrollment: async (_, {course, user}, context) => {
+            try {
+                const currentUser = await UserModel.getByToken(context.request.cookies.token)
+                const userInstance = await UserModel.findOne({_id: user})
+                if (!userInstance)
+                    throw "This user does not exist."
+                if (currentUser.role !== "administrator" && currentUser._id !== userInstance._id)
+                    throw "You dont have permission for this."
+                const courseInstance = await CourseModel.findOne({_id: course})
+                if (!courseInstance)
+                    throw "This course does not exist."
+                
+
+                if (courseInstance.participants.some(user => user._id.toString() === userInstance._id.toString()))
+                    return false
+
+                courseInstance.participants.push(userInstance)
+                courseInstance.save()
+                return true
             } catch (error) {
                 throw new Error(error)
             }
