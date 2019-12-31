@@ -1,4 +1,5 @@
 enum Roles {
+    none
     user
     administrator
     teacher
