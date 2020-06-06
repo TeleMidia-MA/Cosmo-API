@@ -17,7 +17,7 @@
     "nodemon": "^1.18.9"
   },
   "dependencies": {
-    "apollo-server-express": "^2.9.3",
+    "apollo-server-express": "^2.14.2",
     "bcrypt": "^3.0.6",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
